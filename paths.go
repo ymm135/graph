@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"strings"
 )
 
 var ErrTargetNotReachable = errors.New("target vertex not reachable from source")
@@ -231,4 +232,52 @@ func findSCC[K comparable](vertexHash K, state *sccState[K]) {
 
 		state.components = append(state.components, component)
 	}
+}
+
+type PathAndVisited[K comparable] struct {
+	Path    []K
+	Visited map[K]bool
+}
+
+// FindAllPaths 记录所有可达路径，之前实现的是一条最短路径，现在需要多条连通路径
+func FindAllPaths[T any](g Graph[string, T], source, target string) ([]string, error) {
+
+	adjacencyMap, err := g.AdjacencyMap() // 邻接表
+	if err != nil {
+		return nil, fmt.Errorf("could not get adjacency map: %w", err)
+	}
+
+	queue := newPriorityQueue[string]()
+	queue.Push(source, 0) // 加入起点，优先级权重不适用
+	gap := "->"
+	var paths []string
+
+	// BFS 遍历
+	// 相邻的顶点和边
+
+	for queue.Len() > 0 {
+		path, err := queue.Pop()
+		if err != nil {
+			return nil, fmt.Errorf("pop err %w", err)
+		}
+
+		vertexArray := strings.Split(path, gap)
+		if len(vertexArray) > 0 {
+			lastVertex := vertexArray[len(vertexArray)-1]
+
+			// 查找邻近的所有顶点
+			for adjacency, _ := range adjacencyMap[lastVertex] { // edge
+				if !strings.Contains(path, adjacency) { // 路径不包含改点才行
+					resultPath := path + gap + adjacency // 路径
+					if adjacency != target {
+						queue.Push(resultPath, 0)
+					} else {
+						paths = append(paths, resultPath)
+					}
+				}
+			}
+		}
+	}
+
+	return paths, nil
 }

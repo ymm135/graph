@@ -496,3 +496,49 @@ func TestUndirectedStronglyConnectedComponents(t *testing.T) {
 		}
 	}
 }
+
+func TestFindAllPaths(t *testing.T) {
+	tests := map[string]struct {
+		vertices []string
+		edges    []Edge[string]
+	}{
+		"graph with FindAllPaths as on img/scc.svg": {
+			vertices: []string{"A/B", "B/C", "C/A", "C/D", "B/D", "F/A"},
+			edges: []Edge[string]{
+				{Source: "A/B", Target: "B/C"},
+				{Source: "A/B", Target: "B/D"},
+				{Source: "A/B", Target: "C/A"},
+				{Source: "A/B", Target: "F/A"},
+				{Source: "B/C", Target: "C/A"},
+				{Source: "B/C", Target: "C/D"},
+				{Source: "C/A", Target: "C/D"},
+				{Source: "C/A", Target: "F/A"},
+				{Source: "C/D", Target: "B/D"},
+				{Source: "B/D", Target: "B/C"},
+			},
+		},
+	}
+
+	for name, test := range tests {
+		graph := New(StringHash)
+
+		for _, vertex := range test.vertices {
+			_ = graph.AddVertex(vertex)
+		}
+
+		for _, edge := range test.edges {
+			if err := graph.AddEdge(edge.Source, edge.Target); err != nil {
+				t.Fatalf("%s: failed to add edge: %s", name, err.Error())
+			}
+		}
+
+		paths, err := FindAllPaths(graph, "F/A", "C/A")
+		if err != nil {
+			t.Errorf("dd %v", err)
+		}
+
+		for _, path := range paths {
+			t.Log("paths:", path)
+		}
+	}
+}

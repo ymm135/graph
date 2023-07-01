@@ -1,0 +1,56 @@
+strict graph {
+
+
+	"B/D" [  weight=0 ];
+
+	"B/D" -- "A/B" [  weight=0 ];
+
+	"B/D" -- "C/D" [  weight=0 ];
+
+	"B/D" -- "B/C" [  weight=0 ];
+
+	"F/A" [  weight=0 ];
+
+	"F/A" -- "A/B" [  weight=0 ];
+
+	"F/A" -- "C/A" [  weight=0 ];
+
+	"A/B" [  weight=0 ];
+
+	"A/B" -- "B/D" [  weight=0 ];
+
+	"A/B" -- "C/A" [  weight=0 ];
+
+	"A/B" -- "F/A" [  weight=0 ];
+
+	"A/B" -- "B/C" [  weight=0 ];
+
+	"B/C" [  weight=0 ];
+
+	"B/C" -- "C/D" [  weight=0 ];
+
+	"B/C" -- "B/D" [  weight=0 ];
+
+	"B/C" -- "A/B" [  weight=0 ];
+
+	"B/C" -- "C/A" [  weight=0 ];
+
+	"C/A" [  weight=0 ];
+
+	"C/A" -- "A/B" [  weight=0 ];
+
+	"C/A" -- "B/C" [  weight=0 ];
+
+	"C/A" -- "C/D" [  weight=0 ];
+
+	"C/A" -- "F/A" [  weight=0 ];
+
+	"C/D" [  weight=0 ];
+
+	"C/D" -- "C/A" [  weight=0 ];
+
+	"C/D" -- "B/D" [  weight=0 ];
+
+	"C/D" -- "B/C" [  weight=0 ];
+
+}

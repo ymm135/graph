@@ -2,6 +2,7 @@ package draw
 
 import (
 	"bytes"
+	"os"
 	"strings"
 	"testing"
 
@@ -474,4 +475,44 @@ func statementsAreEqual(a, b statement) bool {
 		a.Target == b.Target &&
 		a.EdgeWeight == b.EdgeWeight &&
 		a.SourceWeight == b.SourceWeight
+}
+
+func TestFindAllPaths(t *testing.T) {
+	tests := map[string]struct {
+		vertices []string
+		edges    []graph.Edge[string]
+	}{
+		"graph with FindAllPaths as on img/scc.svg": {
+			vertices: []string{"A/B", "B/C", "C/A", "C/D", "B/D", "F/A"},
+			edges: []graph.Edge[string]{
+				{Source: "A/B", Target: "B/C"},
+				{Source: "A/B", Target: "B/D"},
+				{Source: "A/B", Target: "C/A"},
+				{Source: "A/B", Target: "F/A"},
+				{Source: "B/C", Target: "C/A"},
+				{Source: "B/C", Target: "C/D"},
+				{Source: "C/A", Target: "C/D"},
+				{Source: "C/A", Target: "F/A"},
+				{Source: "C/D", Target: "B/D"},
+				{Source: "B/D", Target: "B/C"},
+			},
+		},
+	}
+
+	for name, test := range tests {
+		graphObj := graph.New(graph.StringHash)
+
+		for _, vertex := range test.vertices {
+			_ = graphObj.AddVertex(vertex)
+		}
+
+		for _, edge := range test.edges {
+			if err := graphObj.AddEdge(edge.Source, edge.Target); err != nil {
+				t.Fatalf("%s: failed to add edge: %s", name, err.Error())
+			}
+		}
+
+		file, _ := os.Create("../simple.gv")
+		_ = DOT(graphObj, file)
+	}
 }
