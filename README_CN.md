@@ -18,12 +18,12 @@
 
 > 状态：由于 graph 版本处于 0.x 阶段，公共 API 不应被视为稳定的。
  
-> README 可能包含未发布的更改。请查看 [latest documentation](https://pkg.go.dev/github.com/dominikbraun/graph).
+> README 可能包含未发布的更改。请查看 [latest documentation](https://pkg.go.dev/github.com/ymm135/graph).
 
 # 入门指南
 
 ```
-go get github.com/dominikbraun/graph
+go get github.com/ymm135/graph
 ```
 
 # 快速示例
@@ -70,7 +70,7 @@ _ = g.AddEdge(3, 4)
 
 ## 创建自定义类型节点ID图
 
-要详细了解此示例，请参见 [concept of hashes](https://pkg.go.dev/github.com/dominikbraun/graph@v0.17.0-rc4#hdr-Hashes).
+要详细了解此示例，请参见 [concept of hashes](https://pkg.go.dev/github.com/ymm135/graph@v0.17.0-rc4#hdr-Hashes).
 
 ```go
 type City struct {
@@ -280,8 +280,8 @@ package main
 import (
 	"os"
 
-	"github.com/dominikbraun/graph"
-	"github.com/dominikbraun/graph/draw"
+	"github.com/ymm135/graph"
+	"github.com/ymm135/graph/draw"
 )
 
 func main() {
@@ -386,8 +386,8 @@ style := properties.Attributes["style"]
 g := graph.NewWithStore(graph.IntHash, myStore)
 ```
 
-恰当实现 `Store` 接口，参考 [documentation](https://pkg.go.dev/github.com/dominikbraun/graph#Store)。
-[`graph-sql`](https://github.com/dominikbraun/graph-sql) 是一个可直接使用的 SQL 存储实现。
+恰当实现 `Store` 接口，参考 [documentation](https://pkg.go.dev/github.com/ymm135/graph#Store)。
+[`graph-sql`](https://github.com/ymm135/graph-sql) 是一个可直接使用的 SQL 存储实现。
 # 文档
 
-完整文档可在以下位置找到： [pkg.go.dev](https://pkg.go.dev/github.com/dominikbraun/graph).
+完整文档可在以下位置找到： [pkg.go.dev](https://pkg.go.dev/github.com/ymm135/graph).
